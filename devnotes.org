@@ -1,0 +1,2 @@
+* Ticket Rules SQL
+  CREATE TABLE ost_ticket_rules (id TINYINT AUTO_INCREMENT PRIMARY KEY, isenabled TEXT NOT NULL COLLATE utf8_general_ci, Category varchar(125) NOT NULL COLLATE utf8_general_ci, Criteria TEXT NOT NULL COLLATE utf8_general_ci, Action TEXT NOT NULL COLLATE utf8_general_ci, Department TEXT NOT NULL COLLATE utf8_general_ci, Staff TEXT NOT NULL COLLATE utf8_general_ci, updated DATETIME NOT NULL, created DATETIME NOT NULL);
