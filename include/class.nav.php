@@ -33,6 +33,7 @@ class StaffNav {
             $tabs['topics']=array('desc'=>'Help Topics','href'=>'admin.php?t=topics','title'=>'Help Topics');
             $tabs['staff']=array('desc'=>'Staff','href'=>'admin.php?t=staff','title'=>'Staff Members');
             $tabs['depts']=array('desc'=>'Departments','href'=>'admin.php?t=depts','title'=>'Departments');
+            $tabs['rules']=array('desc'=>'Rules','href'=>'rules.php','title'=>'Rules');
         }else {
             $tabs['tickets']=array('desc'=>'Tickets','href'=>'tickets.php','title'=>'Ticket Queue');
             if($thisuser && $thisuser->canManageKb()){
@@ -41,12 +42,12 @@ class StaffNav {
             $tabs['directory']=array('desc'=>'Directory','href'=>'directory.php','title'=>'Staff Directory');
             $tabs['profile']=array('desc'=>'My Account','href'=>'profile.php','title'=>'My Profile');
         }
-        $this->tabs=$tabs;    
+        $this->tabs=$tabs;
     }
-    
-    
+
+
     function setTabActive($tab){
-            
+
         if($this->tabs[$tab]){
             $this->tabs[$tab]['active']=true;
             if($this->activetab && $this->activetab!=$tab && $this->tabs[$this->activetab])
@@ -56,28 +57,28 @@ class StaffNav {
         }
         return false;
     }
-    
+
     function addSubMenu($item,$tab=null) {
-        
+
         $tab=$tab?$tab:$this->activetab;
         $this->submenu[$tab][]=$item;
     }
 
-    
-    
+
+
     function getActiveTab(){
         return $this->activetab;
-    }        
+    }
 
     function getTabs(){
         return $this->tabs;
     }
 
     function getSubMenu($tab=null){
-      
-        $tab=$tab?$tab:$this->activetab;  
+
+        $tab=$tab?$tab:$this->activetab;
         return $this->submenu[$tab];
     }
-    
+
 }
 ?>

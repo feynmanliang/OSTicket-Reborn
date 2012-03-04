@@ -14,8 +14,8 @@
 
     vim: expandtab sw=4 ts=4 sts=4:
     $Id: $
-**********************************************************************/    
-    
+**********************************************************************/
+
     #Disable direct access.
     if(!strcasecmp(basename($_SERVER['SCRIPT_NAME']),basename(__FILE__))) die('kwaheri rafiki!');
 
@@ -53,7 +53,7 @@
     define('INCLUDE_DIR',ROOT_DIR.'include/'); //Change this if include is moved outside the web path.
     define('PEAR_DIR',INCLUDE_DIR.'pear/');
     define('SETUP_DIR',INCLUDE_DIR.'setup/');
-  
+
     /*############## Do NOT monkey with anything else beyond this point UNLESS you really know what you are doing ##############*/
 
     #Current version..
@@ -74,18 +74,18 @@
 
     require($configfile);
     define('CONFIG_FILE',$configfile); //used in admin.php to check perm.
-   
+
    //Path separator
     if(!defined('PATH_SEPARATOR')){
         if(strpos($_ENV['OS'],'Win')!==false || !strcasecmp(substr(PHP_OS, 0, 3),'WIN'))
             define('PATH_SEPARATOR', ';' ); //Windows
-        else 
+        else
             define('PATH_SEPARATOR',':'); //Linux
     }
 
     //Set include paths. Overwrite the default paths.
     ini_set('include_path', './'.PATH_SEPARATOR.INCLUDE_DIR.PATH_SEPARATOR.PEAR_DIR);
-   
+
 
     #include required files
     require(INCLUDE_DIR.'class.usersession.php');
@@ -109,7 +109,7 @@
     #Session related
     define('SESSION_SECRET', MD5(SECRET_SALT)); //Not that useful anymore...
     define('SESSION_TTL', 86400); // Default 24 hours
-   
+
     define('DEFAULT_PRIORITY_ID',1);
     define('EXT_TICKET_ID_LEN',6); //Ticket create. when you start getting collisions. Applies only on random ticket ids.
 
@@ -121,7 +121,8 @@
     define('DEPT_TABLE',TABLE_PREFIX.'department');
     define('TOPIC_TABLE',TABLE_PREFIX.'help_topic');
     define('GROUP_TABLE',TABLE_PREFIX.'groups');
-   
+    define('REPORTS_TABLE',TABLE_PREFIX.'reports');
+
     define('TICKET_TABLE',TABLE_PREFIX.'ticket');
     define('TICKET_NOTE_TABLE',TABLE_PREFIX.'ticket_note');
     define('TICKET_MESSAGE_TABLE',TABLE_PREFIX.'ticket_message');
@@ -129,13 +130,13 @@
     define('TICKET_ATTACHMENT_TABLE',TABLE_PREFIX.'ticket_attachment');
     define('TICKET_PRIORITY_TABLE',TABLE_PREFIX.'ticket_priority');
     define('TICKET_LOCK_TABLE',TABLE_PREFIX.'ticket_lock');
-  
+
     define('EMAIL_TABLE',TABLE_PREFIX.'email');
     define('EMAIL_TEMPLATE_TABLE',TABLE_PREFIX.'email_template');
     define('BANLIST_TABLE',TABLE_PREFIX.'email_banlist');
     define('API_KEY_TABLE',TABLE_PREFIX.'api_key');
-    define('TIMEZONE_TABLE',TABLE_PREFIX.'timezone'); 
-   
+    define('TIMEZONE_TABLE',TABLE_PREFIX.'timezone');
+
     #Connect to the DB && get configuration from database
     $ferror=null;
     if (!db_connect(DBHOST,DBUSER,DBPASS) || !db_select_database(DBNAME)) {
