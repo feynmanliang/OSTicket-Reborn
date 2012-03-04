@@ -8,6 +8,17 @@
      }
      ?>
      <title>osTicket :: Staff Control Panel</title>
+     <?
+        //MOD by michael.therrien 7/24/09
+        if(isset($_GET[full]))$_SESSION['full']="TRUE";
+        if(isset($_GET[mobile]))unset($_SESSION['full']);
+        include("mobile_device_detect.php");
+        if(!isset($_SESSION['full']) && mobile_device_detect(true,true,true,true,true,true,false,false))
+        {
+        echo"Welcome to osTicket Mobile!<br>";
+        }
+        else
+            { ?>
      <link rel="stylesheet" href="css/main.css" media="screen">
      <link rel="stylesheet" href="css/style.css" media="screen">
      <link rel="stylesheet" href="css/tabs.css" type="text/css">
@@ -21,6 +32,7 @@
      if($cfg && $cfg->getLockTime()) { //autoLocking enabled.?>
          <script type="text/javascript" src="js/autolock.js" charset="utf-8"></script>
          <?}?>
+     <?}?>
  </head>
  <body>
  <?php
@@ -50,7 +62,7 @@ while($graphOptions = mysql_fetch_array($OptionsResult)){?>
                                                          $thisuser->isadmin())
                 {?> | <a href="reports.php">Reports</a> <?}?>
             <?}?>
-    | <?="$isdeptmanager";?><a href="profile.php?t=pref">My Preference</a> | <a href="logout.php">Log Out</a></p>
+    | <?="$isdeptmanager";?><a href="profile.php?t=pref">My Preference</a> | <?if(mobile_device_detect(true,true,true,true,true,true,false,false)){ if(isset($_SESSION['full']))echo"<a href=\"index.php?mobile\">Mobile"; else echo"<a href=\"index.php?full\">Full";echo" Version</a> | ";};?><?if(mobile_device_detect(true,true,true,true,true,true,false,false)){ if(isset($_SESSION['full']))echo"<a href=\"index.php?mobile\">Mobile"; else echo"<a href=\"index.php?full\">Full";echo" Version</a> | ";};?><a href="logout.php">Log Out</a></p>
                                  <?}?>
 </div>
 <div id="nav">
