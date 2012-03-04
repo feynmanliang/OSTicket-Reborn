@@ -47,7 +47,7 @@ $info=($_POST && $errors)?Format::input($_POST):array(); //on error...use the po
     </tr>
     <tr height=2px><td align="left" colspan=2 >&nbsp;</td</tr>
     <tr>
-        <th> Topic:</th>
+        <th>School:</th>
         <td>
             <select name="topicId">
                 <option value="" selected >Select One</option>
