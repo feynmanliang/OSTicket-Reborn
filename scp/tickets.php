@@ -1,9 +1,9 @@
 <?php
 /*************************************************************************
     tickets.php
-    
+
     Handles all tickets related actions.
- 
+
     Peter Rotich <peter@osticket.com>
     Copyright (c)  2006-2010 osTicket
     http://www.osticket.com
@@ -118,10 +118,10 @@ if($_POST && !$errors):
 
             if(!$errors && ($_POST['dept_id']==$ticket->getDeptId()))
                 $errors['dept_id']='Ticket already in the Dept.';
-       
+
             if(!$errors && !$thisuser->canTransferTickets())
                 $errors['err']='Action Denied. You are not allowed to transfer tickets.';
-            
+
             if(!$errors && $ticket->transfer($_POST['dept_id'])){
                  $olddept=$ticket->getDeptName();
                  $ticket->reload(); //dept manager changed!
@@ -169,7 +169,7 @@ if($_POST && !$errors):
             }elseif(!$errors['err']) {
                 $errors['err']='Unable to assign the ticket';
             }
-            break; 
+            break;
         case 'postnote':
             $fields=array();
             $fields['title']    = array('type'=>'string',   'required'=>1, 'error'=>'Title required');
@@ -334,7 +334,7 @@ if($_POST && !$errors):
         switch($_POST['a']) {
             case 'mass_process':
                 if(!$thisuser->canManageTickets())
-                    $errors['err']='You do not have permission to mass manage tickets. Contact admin for such access';    
+                    $errors['err']='You do not have permission to mass manage tickets. Contact admin for such access';
                 elseif(!$_POST['tids'] || !is_array($_POST['tids']))
                     $errors['err']='No tickets selected. You must select at least one ticket.';
                 elseif(($_POST['reopen'] || $_POST['close']) && !$thisuser->canCloseTickets())
@@ -343,7 +343,7 @@ if($_POST && !$errors):
                     $errors['err']='You do not have permission to delete tickets';
                 elseif(!$_POST['tids'] || !is_array($_POST['tids']))
                     $errors['err']='You must select at least one ticket';
-        
+
                 if(!$errors) {
                     $count=count($_POST['tids']);
                     if(isset($_POST['reopen'])){
@@ -362,7 +362,7 @@ if($_POST && !$errors):
                         $note='Ticket closed without response by '.$thisuser->getName();
                         foreach($_POST['tids'] as $k=>$v) {
                             $t = new Ticket($v);
-                            if($t && @$t->close()){ 
+                            if($t && @$t->close()){
                                 $i++;
                                 $t->logActivity('Ticket Closed',$note,false,'System');
                             }
@@ -374,7 +374,7 @@ if($_POST && !$errors):
                         foreach($_POST['tids'] as $k=>$v) {
                             $t = new Ticket($v);
                             if($t && !$t->isoverdue())
-                                if($t->markOverdue()) { 
+                                if($t->markOverdue()) {
                                     $i++;
                                     $t->logActivity('Ticket Marked Overdue',$note,false,'System');
                                 }
@@ -412,7 +412,7 @@ if($_POST && !$errors):
     }
     $crap='';
 endif;
-//Navigation 
+//Navigation
 $submenu=array();
 /*quick stats...*/
 $sql='SELECT count(open.ticket_id) as open, count(answered.ticket_id) as answered '.
@@ -421,7 +421,7 @@ $sql='SELECT count(open.ticket_id) as open, count(answered.ticket_id) as answere
      'LEFT JOIN '.TICKET_TABLE.' open ON open.ticket_id=ticket.ticket_id AND open.status=\'open\' AND open.isanswered=0 '.
      'LEFT JOIN '.TICKET_TABLE.' answered ON answered.ticket_id=ticket.ticket_id AND answered.status=\'open\' AND answered.isanswered=1 '.
      'LEFT JOIN '.TICKET_TABLE.' overdue ON overdue.ticket_id=ticket.ticket_id AND overdue.status=\'open\' AND overdue.isoverdue=1 '.
-     'LEFT JOIN '.TICKET_TABLE.' assigned ON assigned.ticket_id=ticket.ticket_id AND assigned.staff_id='.db_input($thisuser->getId());
+     'LEFT JOIN '.TICKET_TABLE.' assigned ON assigned.ticket_id=ticket.ticket_id AND ticket.status=\'open\' AND assigned.staff_id='.db_input($thisuser->getId());
 if(!$thisuser->isAdmin()){
     $sql.=' WHERE ticket.dept_id IN('.implode(',',$thisuser->getDepts()).') OR ticket.staff_id='.db_input($thisuser->getId());
 }
@@ -439,7 +439,7 @@ if($cfg->showAnsweredTickets()) {
         $nav->addSubMenu(array('desc'=>'Open ('.$stats['open'].')','title'=>'Open Tickets', 'href'=>'tickets.php', 'iconclass'=>'Ticket'));
     if($stats['answered']) {
         $nav->addSubMenu(array('desc'=>'Answered ('.$stats['answered'].')',
-                           'title'=>'Answered Tickets', 'href'=>'tickets.php?status=answered', 'iconclass'=>'answeredTickets')); 
+                           'title'=>'Answered Tickets', 'href'=>'tickets.php?status=answered', 'iconclass'=>'answeredTickets'));
     }
 }
 
@@ -463,14 +463,14 @@ $nav->addSubMenu(array('desc'=>'Closed Tickets','title'=>'Closed Tickets', 'href
 
 
 if($thisuser->canCreateTickets()) {
-    $nav->addSubMenu(array('desc'=>'New Ticket','href'=>'tickets.php?a=open','iconclass'=>'newTicket'));    
+    $nav->addSubMenu(array('desc'=>'New Ticket','href'=>'tickets.php?a=open','iconclass'=>'newTicket'));
 }
 
 //Render the page...
 $inc=$page?$page:'tickets.inc.php';
 
 //If we're on tickets page...set refresh rate if the user has it configured. No refresh on search and POST to avoid repost.
-if(!$_POST && $_REQUEST['a']!='search' && !strcmp($inc,'tickets.inc.php') && ($min=$thisuser->getRefreshRate())){ 
+if(!$_POST && $_REQUEST['a']!='search' && !strcmp($inc,'tickets.inc.php') && ($min=$thisuser->getRefreshRate())){
     define('AUTO_REFRESH',1);
 }
 

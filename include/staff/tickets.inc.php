@@ -93,7 +93,7 @@ if($status){
 //Sub-statuses Trust me!
 if($staffId && ($staffId==$thisuser->getId())) { //Staff's assigned tickets.
     $results_type='Assigned Tickets';
-    $qwhere.=' AND ticket.staff_id='.db_input($staffId);
+    $qwhere.=' AND ticket.status="open" AND ticket.staff_id='.db_input($staffId);
 }elseif($showoverdue) { //overdue
     $qwhere.=' AND isoverdue=1 ';
 }elseif($showanswered) { ////Answered
