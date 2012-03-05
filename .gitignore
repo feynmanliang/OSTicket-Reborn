@@ -2,3 +2,4 @@ scripts/
 .htaccess
 .DS_Store
 ost-config.php
+*.csv
