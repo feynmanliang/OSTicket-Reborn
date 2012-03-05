@@ -1,0 +1,54 @@
+osTicket Theme version 1.6 RC4
+
+CTheme beta by Mauricio Terrats <mterrats_at_gmail_dot_com>
+
+Design by Free CSS Templates
+http://www.freecsstemplates.org
+Modified by Mauricio Terrats mterrats_at_gmail_dot_com
+http://xux.in/blog
+
+Icons by famfamfam
+http://www.famfamfam.com
+
+Captcha by Ed Eliot
+http://www.ejeliot.com/pages/2
+
+Read license.txt for more information.
+
+
+INSTALLATION
+
+- First of all backup all your data before you continue.
+- Upload client.tar.gz to your installed osTicket root folder.
+- Uncompress file (tar -zxf client.tar.gz)
+- Now you should see a folder "client" inside your root osTicket folder, don't go there yet!.
+- Modify file client.inc.php located at the osTicket's root folder:
+  - Replace first line for second line
+    //define('CLIENTINC_DIR',INCLUDE_DIR.'client/');
+    define('CLIENTINC_DIR','client/');
+- Repeat the last step for the file login.php
+- Edit the index.php (from osTicket) and comment (or delete) all the HTML code (no PHP) in order to see the template display correctly,
+  then you just need to add this line before the footer in included: require(CLIENTINC_DIR.'main.inc.php');
+- Now enter the new client folder and adjust the file config.php
+- Go to your osTicket client interface and enjoy your new theme ;)
+
+CAPTCHA CONFIGURATION
+
+- Open config.php inside the client dir and enable captcha (set it to 1)
+- Open ../open.php and paste the following code below the line: $inc='open.inc.php'; (line 19)
+
+// CAPTCHA CONFIGURATION
+include_once("client/config.php");
+include_once(CTHEME_PATH."php-captcha.inc.php");
+if (CTHEME_CAPTCHA && $_POST) {
+  if (!PhpCaptcha::Validate($_POST['captcha_img'])) {
+    $errors['ctcaptcha'] = $ctlang->dot('open_017');
+    require(CLIENTINC_DIR.'header.inc.php');
+    require(CLIENTINC_DIR.$inc);
+    require(CLIENTINC_DIR.'footer.inc.php');
+    exit;
+  }
+}
+
+- Save it, and have fun ;)
+- Additional PHP configutions might be needed to use this captcha, GD and TTF are at least required.

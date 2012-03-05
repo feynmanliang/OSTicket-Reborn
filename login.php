@@ -2,7 +2,7 @@
 /*********************************************************************
     index.php
 
-    Client Login 
+    Client Login
 
     Peter Rotich <peter@osticket.com>
     Copyright (c)  2006-2010 osTicket
@@ -16,7 +16,8 @@
 **********************************************************************/
 require_once('main.inc.php');
 if(!defined('INCLUDE_DIR')) die('Fatal Error');
-define('CLIENTINC_DIR',INCLUDE_DIR.'client/');
+//define('CLIENTINC_DIR',INCLUDE_DIR.'client/');
+define('CLIENTINC_DIR','client/');
 define('OSTCLIENTINC',TRUE); //make includes happy
 
 require_once(INCLUDE_DIR.'class.client.php');
@@ -28,7 +29,7 @@ if($_POST && (!empty($_POST['lemail']) && !empty($_POST['lticket']))):
     $email=trim($_POST['lemail']);
     $ticketID=trim($_POST['lticket']);
     //$_SESSION['_client']=array(); #Uncomment to disable login strikes.
-    
+
     //Check time for last max failed login attempt strike.
     $loginmsg='Invalid login';
     if($_SESSION['_client']['laststrike']) {
@@ -45,7 +46,7 @@ if($_POST && (!empty($_POST['lemail']) && !empty($_POST['lticket']))):
     if(!$errors && is_numeric($ticketID) && Validator::is_email($email) && ($tid=Ticket::getIdByExtId($ticketID))) {
         //At this point we know the ticket is valid.
         $ticket= new Ticket($tid);
-        //TODO: 1) Check how old the ticket is...3 months max?? 2) Must be the latest 5 tickets?? 
+        //TODO: 1) Check how old the ticket is...3 months max?? 2) Must be the latest 5 tickets??
         //Check the email given.
         if($ticket->getId() && strcasecmp($ticket->getEMail(),$email)==0){
             //valid match...create session goodies for the client.

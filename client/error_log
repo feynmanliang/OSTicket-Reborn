@@ -1,0 +1,4 @@
+[30-Nov-2010 10:46:57] PHP Fatal error:  Call to undefined function imageftbbox() in /home/aadmin/public_html/soporte/client/php-captcha.inc.php on line 296
+[30-Nov-2010 10:53:54] PHP Fatal error:  Call to undefined function imageftbbox() in /home/aadmin/public_html/soporte/client/php-captcha.inc.php on line 296
+[30-Nov-2010 10:53:56] PHP Fatal error:  Call to undefined function imageftbbox() in /home/aadmin/public_html/soporte/client/php-captcha.inc.php on line 296
+[30-Nov-2010 10:54:04] PHP Fatal error:  Call to undefined function imageftbbox() in /home/aadmin/public_html/soporte/client/php-captcha.inc.php on line 296

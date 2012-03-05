@@ -3,3 +3,4 @@ scripts/
 .DS_Store
 ost-config.php
 *.csv
+*.psd

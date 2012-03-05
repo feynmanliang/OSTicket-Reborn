@@ -23,7 +23,8 @@ require_once('main.inc.php');
 if(!defined('INCLUDE_DIR')) die('Fatal error');
 
 /*Some more include defines specific to client only */
-define('CLIENTINC_DIR',INCLUDE_DIR.'client/');
+//define('CLIENTINC_DIR',INCLUDE_DIR.'client/');
+define('CLIENTINC_DIR','client/');
 define('OSTCLIENTINC',TRUE);
 
 //Check the status of the HelpDesk.
